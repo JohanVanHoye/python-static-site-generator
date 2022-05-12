@@ -15,7 +15,7 @@ class Content(Mapping):
         metadata = load(fm, Loader=FullLoader)
         return cls(metadata, content)
 
-    def __int__(self, metadata, content):
+    def __init__(self, metadata, content):
         self.data = metadata
         self.data += {"content": content}
 
@@ -25,10 +25,11 @@ class Content(Mapping):
 
     @property
     def type(self):
-        return self.data["type"] if self.data.key is type else None
+        return self.data["type"] if "type" in self.data else None
 
-    def set_type(self, a):
-        self.data["type"] = a
+    @type.setter
+    def type(self, type):
+        self.data["type"] = type
 
     def __getitem__(self, key):
         return self.data[key]
